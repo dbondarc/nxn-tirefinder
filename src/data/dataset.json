@@ -1,0 +1,121 @@
+{
+    "ds" : [
+        {
+            "id": 1,
+            "label": "loanType",
+            "next": "propertyType",
+            "title": "Pick Your Loan Type",
+            "links": [ 
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-purchase2.png", "btn": false, "val": "purchase" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-refi2.png", "btn": false, "val": "refinance" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        { 
+            "id": 2,
+            "label": "propertyType",
+            "next": "creditRating",
+            "title": "Pick Your Property Type",
+            "links": [ 
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-single2.png", "btn": false, "val": "single" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-multi2.png", "btn": false, "val": "multi" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-condo2.png", "btn": false, "val": "condo" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-mobile2.png", "btn": false, "val": "mobile" }
+            ],               
+            "rangeSlider": false,
+            "templateUrl": false               
+        },
+        { 
+            "id": 3,
+            "label": "creditRating",
+            "next": "loanAmount",
+            "title": "How is Your Credit?",
+            "links": [ 
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-excellent.png", "btn": false, "val": "excellent" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-good.png", "btn": false, "val": "good" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-fair.png", "btn": false, "val": "fair" },
+                { "img": "http://www.harprefiquote.com/sh3/images/buttons-poor.png", "btn": false, "val": "poor" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        { 
+            "id": 31,
+            "label": "",
+            "next": "",
+            "title": "Are You a Homeowner?",
+            "links": [ 
+                { "img": "", "btn": true, "val": "yes" },
+                { "img": "", "btn": true, "val": "no" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        { 
+            "id": 4,
+            "label": "propertyValue",
+            "next": "mortgageBalance",
+            "title": "What is your Property Value?",
+            "links": [],
+            "rangeSlider": {
+                "cls": "curr",
+                "min": 80000,
+                "max": 1000000,
+                "def": 80000,
+                "step": 1
+            },
+            "templateUrl": false
+        },
+        { 
+            "id": 5,  
+            "label": "mortgageBalance",
+            "next": "currentRate",
+            "title": "Mortgage Balance",
+            "links": [],
+            "caption": [],
+            "rangeSlider": {
+                "cls": "curr",
+                "min": 0,
+                "max": 1000000,
+                "def": 0,
+                "step": 1
+            },
+            "templateUrl": false 
+        },
+        { 
+            "id": 6,  
+            "label": "currentRate",
+            "next": "property_info",
+            "title": "Current Interest Rate",
+            "links": [],
+            "caption": [],
+            "rangeSlider": {
+                "cls": "perc",
+                "min": 3,
+                "max": 10,
+                "def": 4,
+                "step": 0.25
+            },
+            "templateUrl": false
+        },
+        { 
+            "id": 7,
+            "label": "property_info",
+            "next": "homeowner_info",
+            "title": "Please enter your Property Information",
+            "links": [],
+            "rangeSlider": false,
+            "templateUrl": "forms/property_info.html" 
+        },            
+        { 
+            "id": 8,
+            "label": "homeowner_info",
+            "next": "homeowner_info",
+            "title": "Please verify you are the homeowner",
+            "links": [],
+            "rangeSlider": false,
+            "templateUrl": "forms/homeowner_info.html" 
+        }
+    ]
+}

@@ -1,0 +1,195 @@
+html, body {
+    height: 100%;
+}
+
+body { 
+    background: #ffffff;
+    min-width: 320px;
+    width: 100%;
+    text-align: center;
+    font-family: "Open Sans";
+    font-size: 12px;    
+}
+
+form div {
+    padding:0;
+    margin:0;
+}
+
+form h3, form h4 {
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: bold;
+    color: darkmagenta;
+}
+
+hr {
+    border-top: 1px solid #999;  /* Bootstrap override */
+}
+
+.wrapper {
+    height: 100%;
+}
+
+ul { list-style: none; }
+
+li {
+    float: left;
+}
+
+ul, li {
+    margin:0; 
+}    
+
+form {
+    float:left;
+    text-align: left;
+}
+
+form div.row {
+    max-width: 400px;
+}
+
+form .btn {
+    color: #fff;
+    background: #ff6200;
+    text-transform: uppercase;
+}
+
+form .btn:hover {
+    color: #fff;
+    background: #333;
+}
+
+.form-control {
+    font-size: 12px;
+} 
+
+select {
+    float: none !important;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: bold;
+    min-width: 200px;    
+}
+
+form label {
+    position: relative;
+}
+
+button.search {
+    background-color: darkmagenta;
+    color: white;
+    margin-left: 5px;
+}
+
+.btn {
+    background-color: darkmagenta;
+    color: #fff;
+    padding: 6px 10px;  /* Bootstrap override */
+    border-radius: 0;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.btn:hover, .btn:active {
+    color:#fff; 
+}
+
+.form-group {
+    margin: 0;
+}
+
+.form-control {
+    border-radius: 0px;  /* Bootstrap override */
+    margin: 3px;
+}
+
+#results {
+    float: left;
+    text-align: left;
+}
+
+
+
+label:after {
+  content: '>';
+  font: 17px "Consolas", monospace;
+  color: #333;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 11px;
+  /*Adjust for position however you want*/
+  
+  top: 9px;
+  padding: 0 0 2px;
+  /*border-bottom: 1px solid #999;*/
+  /*left line */
+  
+  position: absolute;
+  pointer-events: none;
+}
+ 
+label select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+  
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  float: right;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  -ms-word-break: normal;
+  word-break: normal;
+}
+ 
+
+.form-inline .form-control {
+    display: block; /* FIX BOOTSTRAP display: inline-block; */
+}
+
+.form-group {
+    height: 50px;
+    line-height: 50px;
+}
+
+#results .form-group h4, #results .form-group button {
+    margin-left: 5px;
+    min-width: 200px;
+}
+
+#results button {min-width:200px;}
+
+#results h2, #results h3 {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#results h3 {
+    color: darkmagenta;
+}
+    
+#results span {
+    color: #000;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;    
+}
+
+#results .desc {
+    padding-bottom: 40px;
+}

@@ -1,0 +1,36 @@
+<div class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
+<form name="signup" class="form" role="form" ng-enter="update('homeownerInfo',first+', '+last+', '+email+', '+phoneNumber); submit(signup, signup.$invalid);" novalidate>
+
+    <div class="form-group col-lg-9 col-md-10 col-xs-11">
+        <label for="first">First Name</label>
+        <input type="text" class="form-control" name="first" id="first" placeholder="First Name" ng-model="first" ng-pattern="/^[a-zA-Z]/" ng-minlength="2" required />
+            <span class="label label-danger" ng-show="submitted && (signup.first.$error.required || signup.first.$error.pattern && signup.first.$dirty)">A valid First Name is required (example: Mary)</span>
+    </div>
+
+    <div class="form-group col-lg-9 col-md-10 col-xs-11">
+        <label for="last">Last Name</label>
+        <input type="text" name="last" class="form-control" id="last" placeholder="Last Name" ng-model="last" ng-pattern="/[a-zA-Z]/" ng-minlength="2" required />
+            <span class="label label-danger" ng-show="submitted && (signup.last.$error.required || signup.last.$error.pattern && signup.last.$dirty)">A valid Last Name is required (example: Smith)</span>
+    </div>
+
+    <div class="form-group col-lg-9 col-md-10 col-xs-11">
+        <label for="email">E-mail Address</label>
+        <input type="email" name="email" id="email" ng-model="email" placeholder="Your Email Address" class="form-control" required />
+            <span class="label label-danger" ng-show="submitted && !testEmail(email)">A valid Email Address is required (example: MarySmith@gmail.com)</span>
+    </div>
+
+    <div class="form-group col-lg-9 col-md-10 col-xs-11">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="tel" id="phone" name="phoneNumber" class="form-control" placeholder="Phone Number" ng-model="phoneNumber" ng-pattern="testPhonePattern" required  ng-model="phoneNumber" ui-us-phone-number maxlength="14" />
+            <span class="label label-danger" ng-show="submitted && !testPhone(phoneNumber)">A valid Phone Number is required (example: 213-432-2333)</span>
+    </div>
+
+    <div class="row" ng-if="slide.prev>=0"><button type="submit" id="submit" class="btn btn-default btn-lg next {{completed && 'disabled'}}" ng-click="update('homeownerInfo',first+', '+last+', '+email+', '+phoneNumber); submit(signup, signup.$invalid);" ng-if="signup.$invalid ? 'toggle-cls=alert,alert-danger' : 'toggle-cls=alert,alert-success'" style="margin-top:20px;">Submit</button>
+    </div>
+    <div class="row" ng-if="slide.prev>=0"><a class="btn btn-sm prev" href="#/{{slides[slide.prev].label}}" ng-click="dat.setPanel(slide.prev);">Back</a></div>
+
+    <div class="tcpa_div well"><label><input type="hidden" id="leadid_tcpa_disclosure">
+    <p class="tcpa">We take your <a href="javascript:tcpa_pop('/privacy/');" class="tcpa_link">privacy</a> seriously. By clicking the button, you agree to be matched with <a href="javascript:tcpa_pop('http://www.homehelp101.com/partners/');" class="tcpa_link">partners</a> from our network including Quicken Loans and loanDepot, and consent (not required as a condition to purchase a good/service) for us and/or them to contact you (including through automated means; e.g. autodialing, text and pre-recorded messaging) via telephone, mobile device (including SMS and MMS), and/or email, even if you are on a corporate, state or national Do Not Call Registry.</p>
+    </label></div>
+    <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
+</form>

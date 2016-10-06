@@ -1,0 +1,14 @@
+<div id="messages" class="alert alert-success" ng-show="messages" ng-bind="messages"></div>
+<form name="lenderForm" class="form" role="form" novalidate>
+
+    <div class="form-group col-lg-9 col-md-10 col-xs-11">
+        <label for="lender"></label>
+        <input type="text" class="form-control {{submitted && lenderForm.lender.$error ? 'has-error' : ''}}" name="lender" id="lender" placeholder="Current Lender" ng-bind="lender" ng-value="lender" ng-model="lender" required />
+        <span class="label label-danger" ng-show="submitted && lenderForm.lender.$error.required">Required</span>
+    </div>
+
+    <div class="row" style="margin-top:20px;"></div>
+    <div class="row" ng-if="$index != 0"><a class="btn btn-default btn-lg next" href="#/{{lenderForm.$invalid ? '' : slides[slide.next].label}}" ng-click=" update('lenderInfo',lender); submit(lenderForm, lenderForm.$invalid, slide.next); lenderForm.$invalid || dat.setPanel(slide.next);" style="margin-top:20px;">Next <span class="glyphicon glyphicon-play"> </span></a></div>
+    <div class="row" ng-if="$index != 0"><a class="btn btn-sm prev" href="#/{{slides[slide.prev].label}}" ng-click="update('lenderInfo',lender); select(slide.prev); dat.setPanel(slide.prev);">Back</a></div>
+    <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
+</form>

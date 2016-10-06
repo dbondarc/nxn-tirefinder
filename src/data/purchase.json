@@ -1,0 +1,77 @@
+{
+    "purchase" : [       
+        { 
+            "id": 11,
+            "label": "creditRating",
+            "next": "homeFound",
+            "title": "How is Your Credit?",
+            "links": [ 
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-excellent.png", "html": "", "caption": "", "val": "excellent" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-good.png", "html": "", "caption": "", "val": "good" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-fair.png", "html": "", "caption": "", "val": "fair" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-poor.png", "html": "", "caption": "", "val": "poor" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        {
+            "id": 12,
+            "label": "homeFound",
+            "next": "homePrice",
+            "title": "How is Your Credit?",
+            "links": [
+                "imgSrc": "", "caption": "", "val": "yes",
+                "imgSrc": "", "caption": "", "val": "no"
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },        
+        { 
+            "id": 13,
+            "label": "propertyValue",
+            "next": "mortgageBalance",
+            "title": "What is your Property Value?",
+            "links": [],
+            "rangeSlider": {
+                "cls": "curr",
+                "min": 80000,
+                "max": 1000000,
+                "def": 80000,
+                "step": 1
+            },
+            "templateUrl": false
+        },
+        { 
+            "id": 14,  
+            "label": "mortgageBalance",
+            "next": "currentRate",
+            "title": "Mortgage Balance",
+            "links": [],
+            "caption": [],
+            "rangeSlider": {
+                "cls": "curr",
+                "min": 0,
+                "max": 1000000,
+                "def": 0,
+                "step": 1
+            },
+            "templateUrl": false 
+        },
+        { 
+            "id": 15,  
+            "label": "currentRate",
+            "next": "property_info",
+            "title": "Current Interest Rate",
+            "links": [],
+            "caption": [],
+            "rangeSlider": {
+                "cls": "perc",
+                "min": 3,
+                "max": 10,
+                "def": 4,
+                "step": 0.25
+            },
+            "templateUrl": false
+        },
+    ]
+}

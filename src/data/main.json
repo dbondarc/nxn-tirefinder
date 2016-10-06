@@ -1,0 +1,44 @@
+{
+    "flows" : [
+        {
+            "id": 1,
+            "label": "loanType",
+            "next": "propertyType",
+            "title": "Pick Your Loan Type",
+            "links": [
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-purchase2.png", "caption": "", "val": "purchase" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-refi2.png", "caption": "", "val": "refinance" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        {
+            "id": 2,
+            "label": "propertyType",
+            "next": "creditRating",
+            "title": "Pick Your Property Type",
+            "links": [
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-single2.png", "caption": "", "val": "single" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-multi2.png", "caption": "", "val": "multi" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-condo2.png", "caption": "", "val": "condo" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-mobile2.png", "caption": "", "val": "mobile" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        },
+        {
+            "id": 3,
+            "label": "creditRating",
+            "next": "loanAmount",
+            "title": "How is Your Credit?",
+            "links": [
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-excellent.png", "caption": "", "val": "excellent" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-good.png", "caption": "", "val": "good" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-fair.png", "caption": "", "val": "fair" },
+                { "imgSrc": "http://www.harprefiquote.com/sh3/images/buttons-poor.png", "caption": "", "val": "poor" }
+            ],
+            "rangeSlider": false,
+            "templateUrl": false
+        }        
+    ]
+}
