@@ -1,0 +1,250 @@
+@font-face {
+  font-family: 'HelveticaCond';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-Cond.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaBold';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaCondObl';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-CondObl.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaBoldCondObl';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-BoldCondObl.otf') format('opentype');
+}
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    background: #ffffff;
+    min-width: 320px;
+    width: 100%;
+    text-align: center;
+    font-family: "HelveticaCond";
+    font-size: 12px;    
+}
+
+html body .wrapper { max-width: 64em; margin-left: auto; margin-right: auto; background-color: #fff; margin: 0 auto; min-width: 320px; padding: 0px; }
+
+html body .wrapper::after { clear: both; content: ""; display: block; }
+
+
+header {
+    text-align: left;
+    padding: 20px;
+}
+
+h2 {
+    font-family: "HelveticaBoldCondObl";
+    font-size: 48.24pt;
+    letter-spacing: 50;
+    text-transform: uppercase;
+    color: #80298f;
+    white-space: nowrap;
+}
+
+h2 span {
+    margin-left: 20px;
+    font-size: 48px;
+}
+
+form h3, form h4 {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: darkmagenta;
+}
+
+hr {
+    border-top: 1px solid #999;  /* Bootstrap override */
+}
+
+.wrapper {
+    height: 100%;
+}
+
+ul { list-style: none; }
+
+li {
+    float: left;
+}
+
+ul, li {
+    margin:0; 
+}    
+
+form {
+    float:left;
+    text-align: left;
+}
+
+form div.row {
+    max-width: 400px;
+}
+
+form .btn {
+    color: #fff;
+    background: #80298f;
+    text-transform: uppercase;
+}
+
+form .btn:hover {
+    color: #fff;
+    background: #333;
+}
+
+.form-control {
+    font-size: 12px;
+} 
+
+select {
+    text-transform: uppercase;
+}
+
+form label {
+    position: relative;
+}
+
+button.search {
+    background-color: #80298f;
+    color: white;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+
+.title {
+    font-family: "HelveticaBoldCondObl";
+    font-size: 31.25pt;
+    letter-spacing: 0;
+    color: #80298f;
+}
+
+.btn {
+    background-color: #80298f;
+    color: #fff;
+    padding: 6px 10px;  /* Bootstrap override */
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+.btn:hover, .btn:active {
+    color:#fff; 
+}
+
+#results {
+    float: left;
+    text-align: left;
+}
+
+#results h6 {
+    position: absolute;
+}
+
+
+select {
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    margin: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: HelveticaCondObl; 
+    margin: 5px 0px;
+    padding: 0px 15px;
+    line-height: 1.75;
+    background-color: #ffffff;
+    background-image: none;
+    color: #555;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    float:left;
+    width: 100%;     
+}
+
+span.glyphicon-menu-down {
+    position: relative;
+    right: 8px;
+    top: 14px;
+}
+
+#results h4, #results button {
+    margin-left: 5px;
+    min-width: 200px;
+}
+
+#results button {min-width:200px;}
+
+#results h2, #results h3 {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#results h3 {
+    color: darkmagenta;
+}
+    
+#results span {
+    color: #000;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;    
+}
+
+#results .desc {
+    padding-bottom: 40px;
+}
+
+
+.list div {
+    float: left;
+}
+
+.btn-wrapper {
+    position: relative;
+    height: 100%;
+    top: 20px;
+}
+
+.sep {
+    margin-top: 20px;
+    text-align: center;    
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.tile {
+    display: inline-block;
+}
+
+.tile h4 {
+    position: absolute;
+}
+
+.close {
+    position: absolute;
+    right: 0px;
+    font: 32px "Consolas", monospace;  
+    color: #80298f;  
+}
+
+.btn-choose {
+    padding: 6px 40px;
+}
+
+@media only screen and (min-width:767px) {
+    .sep {
+        margin-top: 0px;
+        text-align: left;
+    }
+}

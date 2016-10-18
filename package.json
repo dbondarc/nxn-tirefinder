@@ -1,0 +1,33 @@
+{
+  "name": "nxn-tirefinder",
+
+  "version": "1.0.0",
+  "description": "nxn-tirefinder",
+  "author": "Dan Bond",
+  "license": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbondarc/nxn-tirefinder.git"
+  },
+  "keywords": [
+    "nexen",
+    "tirefinder"
+  ],
+  "bugs": {
+    "url": "https://github.com/dbondarc/nxn-tirefinder/issues"
+  },
+  "homepage": "https://github.com/dbondarc/nxn-tirefinder#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "jit-grunt": "^0.9.1"
+  },
+  "dependencies": {
+    "angular-input-masks": "^2.1.0"
+  }
+}
