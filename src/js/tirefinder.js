@@ -1,25 +1,28 @@
-// Tire Tables
+// JSON Tables
 var tireJson = "data/tire.json",
     tireSizeJson = "data/tiresize.json",
     vehicleJson = "data/vehicle.json",
     tireImgJson = "data/tireimage.json",
     tireMediaJson = "data/tiremedia.json";
+    tireUrlsJson = "data/tireurls.json";
 
 var make, year, model, style, tirewidth, tireratio, rimsize;
 var sbvData = [];
 var sbsData = [];
+var sizeData = [];
+var widths = [];
+var vehicleData = [];
 var app = angular.module("NexenTireFinder", []);
 
 function uniq(a) {
     return a.sort().filter(function (item, pos, ary) {
-        return !pos || item != ary[pos - 1];
+        return !pos || item !== ary[pos - 1];
     })
 }
 
 app.controller("DataCtrl", function ($scope, $http) {
 
     $scope.active = false;
-
     
     // only need this for Search By Vehicle to get the Tire Size
     
@@ -27,33 +30,21 @@ app.controller("DataCtrl", function ($scope, $http) {
         $http.get(vehicleJson).
         success(function (data, status, headers, config) {
 
-            $scope.vehicleData = [];
+            vehicleData = [];       
             $scope.sizeData = [];
             $scope.years = [];
             $scope.makes = [];
             $scope.sizes = [];
             $scope.tireIds = [];
-            $scope.widths = [];
-            $scope.ratios = [];
-            $scope.rims = [];
-            $scope.position = [];
             $scope.selectedYear = 0;
             $scope.selectedMake = 0;
             $scope.selectedModel = 0;
             $scope.selectedStyle = 0;
-            $scope.selectedWidth = 0;
-            $scope.selectedRatio = 0;
-            $scope.selectedRim = 0;
             $scope.selectedSize = 0;
-            $scope.results = [];
-            $scope.sbvValid = false;
-            $scope.sbsValid = false;
-            $scope.done = false;
-            $scope.changed = false;
 
             for (key in data) {
                 if (data[key] && typeof key === "string") {
-                    $scope.vehicleData.push(data[key]);
+                    vehicleData.push(data[key]);
                     $scope.years.push(data[key].Year);
                     //    $scope.makes.push(data[key].Make);
                 }
@@ -104,15 +95,28 @@ app.controller("DataCtrl", function ($scope, $http) {
     // only used for filter by tire size
     
     function getTireSize() {
-
-                        $scope.sizes = [];
+        $scope.sizes = [];
+        $scope.tireIds = [];
+        $scope.ratios = [];
+        $scope.rims = [];
+        $scope.selectedWidth = 0;
+        $scope.selectedRatio = 0;
+        $scope.selectedRim = 0;
+        $scope.selectedSize = 0;
+        $scope.sbvValid = false;
+        $scope.sbsValid = false;
+        $scope.done = false;
+        $scope.changed = false;
+        widths = [];
+        sizeData = [];
         
         $http.get(tireSizeJson).
         success(function (data, status, headers, config) {
+            
             for (key in data) {
                 if (data[key].tireWidth) {
-                    $scope.sizeData.push(data[key]);
-                    $scope.widths.push(data[key].tireWidth);
+                    sizeData.push(data[key]);
+                    widths.push(data[key].tireWidth);
                 }
             }
 
@@ -121,7 +125,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                 "type": "select",
                 "label": "Tire Width",
                 "name": "tirewidth",
-                "value": uniq($scope.widths).reverse()
+                "value": uniq(widths).reverse()
             };
 
             // Set options for tire ratio
@@ -147,26 +151,38 @@ app.controller("DataCtrl", function ($scope, $http) {
 
     }
 
-    $scope.update = function () {
+    $scope.update = function (selected) {
+        
         var data;
-        var allData = [];
+        var sbvData = [];
         var models = [];
         var makes = [];
         var styles = [];
-        sbvData = [];
-        sbsData = [];
         $scope.noMatches = false;
-        $scope.done = false;
         $scope.changed = true;
+        $scope.selected = 0;
+        if (selected) $scope.selected = selected;
 
+        if (!$scope.changed && $scope.done) {
+            console.log("No changes detected. Do NOTHING!!!!");
+            return false
+        }
+        
+        if ($scope.done && $scope.changed) {
+            console.log("Done and changed");
+            $scope.results = [];
+            $scope.tireIds = [];
+        }
+        
         if ($scope.active === "SBV") { // Search By Vehicle only          
             
-            data = $scope.vehicleData;
+            data = vehicleData;
+            var size;
             make = $scope.selectedMake;
             year = $scope.selectedYear;
             model = $scope.selectedModel;
             style = $scope.selectedStyle;
-
+            
             if ($scope.years.length > 0) {
                 $scope.makes = [];
                 $scope.models = [];
@@ -194,14 +210,91 @@ app.controller("DataCtrl", function ($scope, $http) {
                         }
                     }
                 }
-
+                
+                $scope.sizes = uniq($scope.sizes);
                 $scope.make.value = uniq(makes);
                 $scope.model.value = uniq(models);
+                
+                $scope.both = true;
+                $scope.set = [];
+                
                 if (models) $scope.style.value = uniq(styles);
 
+                if ($scope.selected) {
+                    size = $scope.selected;
+                    sizes = [$scope.selected];
+                }                
+                
+                if ($scope.sizes.length == 1 || $scope.selected) { 
+                    console.log("One size for this vehicle");
+
+                    data = sbvData;
+                    for (d in data) {
+
+                        if (!$scope.selected) {
+                            if ($scope.sizes[0] === data[d].Size) {
+                                size = data[d].Width + "/" + data[d].Ratio + "R" + data[d].Diameter;
+                            }
+                        }
 
 
-                console.log("SBV DataObj: "+sbvData, sbvData.length);
+                        if ( data[d].Position == "Front" ) {
+                            console.log("FRONT & BACK ARE DIFFERENT!");
+                            $scope.selectedFront = data[d].Size
+                        }                         
+                        else if ( data[d].Position == "Rear" ) {
+                            console.log("FRONT & BACK ARE DIFFERENT!");
+                            $scope.selectedRear = data[d].Size
+                        }                           
+                        else {
+                            console.log("FRONT & BACK ARE THE SAME!");
+                            $scope.selectedFront = $scope.selectedRear = size;
+                        }
+                        
+
+                        
+                    }
+                    
+                    data = sizeData;
+                    for (n in data) {
+                        if (data[n].Size == size) {
+                            $scope.tireIds.push(data[n].idTire);
+                        }
+                    }
+                    
+                    $scope.tireIds = uniq($scope.tireIds);
+                    if ($scope.sbvValid) $scope.done = true;
+                    
+                    console.log("tireIds: "+$scope.tireIds, "sizes: "+$scope.sizes, 
+                                "sizesLength:"+$scope.sizes.length);
+                    console.log("done? "+$scope.done, "sbvValid? "+$scope.sbvValid, "changed?"
+                                +$scope.changed);
+                    
+                    
+                }
+                else if ($scope.sizes.length > 1) {
+                    console.log("Multiple sizes for this vehicle");
+                    $scope.selected = 0;
+                    $scope.sequence = 0;
+
+                    data = sbvData;
+                    for (d in data) {
+                        if ( data[d].Position == "Front" ) {
+                            $scope.both = false;
+                            $scope.set.push([data[d]]);
+                        }
+                        if ( data[d].Position == "Rear" ) {
+                            $scope.set[$scope.set.length-1].push(data[d]);
+                        }    
+
+                    }
+                    
+                }
+                else {
+                    console.log("No sizes are available for this vehicle");
+                    // show no matches found
+                    $scope.noMatches = true;
+                }
 
             }
 
@@ -209,16 +302,15 @@ app.controller("DataCtrl", function ($scope, $http) {
 
         if ($scope.active === "SBS") { // Search By Size only
             
-            data = $scope.sizeData;  // using tireSize table
+            data = sizeData;  // using tireSize table
             tirewidth = $scope.selectedWidth;
             tireratio = $scope.selectedRatio;
             rimsize = $scope.selectedRim;
 
-            if ($scope.widths.length > 0) {
-                
+            if (widths.length > 0) {     
                 $scope.ratios = [];
                 $scope.rims = [];
-                $scope.sizes = [];                    
+                $scope.sizes = [];
                 
                 for (n in data) {
                     if (tirewidth && tirewidth == data[n].tireWidth) {
@@ -234,241 +326,77 @@ app.controller("DataCtrl", function ($scope, $http) {
             $scope.rimsize.value = uniq($scope.rims);
             $scope.sizes.push(tirewidth + "/" + tireratio + "R" + rimsize);
             
-            console.log($scope.sizes);
-        }
-
-    };
-
-    $scope.matchTireSize = function (v) {
-        
-        // This should only be used to filter for more than one size. Only one size result in SBV or SBS should be bypassed.
-
-        $scope.selected = v;
-        $scope.tireIds = $scope.results = [];
-        data = $scope.sizeData; // only valid for SBS
-        
-//        console.log(data, $scope.selected);
-        
-        if (!$scope.changed && $scope.done) {
-            console.log("No changes detected. Do NOTHING!!!!");
-            return false
-        }
-        
-        else {          
-            
-            if ($scope.sbvValid && !$scope.sbsValid) {
-
-
-
-                if (sbvData.length === 1) {
-                    console.log("Only one size available for this vehicle");
-
-                    // check if tire size has same front and back
-                    if (sbvData[0].Position === "Both") {
-                        console.log("FRONT & BACK ARE THE SAME!");
-                     //   $scope.sizes = sbvData[0].Size;
-                        $scope.sizes.push(sbvData[0].Width + "/" + sbvData[0].Ratio + "R" + sbvData[0].Diameter);
-                     //   $scope.tireIds.push(sbvData[0].idTire);
-                        $scope.selectedFront = $scope.selectedRear = sbvData[0].Size;
-                    }
-                //    console.log($scope.sizeData);
-                //     console.log($scope.sizes);
-                   // $scope.tireIds = uniq($scope.tireIds);
-                    
-                                    
-               //    console.log(sbvData, $scope.tireIds);
-                    
-                    
-                    
-                } else if (sbvData.length > 1) {
-
-                    
-                    // reduce the subsetData to a single element
-
-                    for (k in sbvData) {
-                        $scope.sizes.push(sbvData[k].Size);
-                        if (sbvData[k].Size === $scope.selected) {
-                            console.log("!!!!!!!!!!!!!!");
-                            $scope.sizeData = sbvData[k];
-                            
-                            // apply selection to tireSize
-                            if ( sbvData[k].Position == "Front" ) {
-                                $scope.selectedFront = sbvData[k].Size
-                            }
-                            if ( sbvData[k].Position == "Rear" ) {
-                                $scope.selectedRear = sbvData[k].Size
-                            }                           
-                            else 
-                                $scope.selectedFront = $scope.selectedRear = sbvData[k].Size;
-                        }
-                    }
-                    
-                    
- //                   console.log($scope.sizeData,"Selected Size: "+$scope.selected, "Multiple sizes available for this vehicle");                    
-
-                    
-                    
-                    for (i in $scope.sizeData) {
-                        if ( $scope.sizeData[i].Size === $scope.selectedFront ) {
-                            $scope.tireIds.push($scope.sizeData[i].idTire);
-                        }
-                        if ( $scope.sizeData[i].Size === $scope.selectedRear ) {
-                            $scope.tireIds.push($scope.sizeData[i].idTire);
-                        }
-                    }
-
-                 //   $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                    $scope.tireIds = uniq($scope.tireIds);                    
-                    
-
-                    // wait for user to select size
-                } else {
-                    console.log("No sizes are available for this vehicle");
-                    // show no matches found
-                    $scope.noMatches = true;
-                }
-            
-
-            }
-
-            if (!$scope.sbvValid && $scope.sbsValid) {
-                
-/*                if ($scope.done) {
-                    getVehicleData();
-                }
-                
-                else {
-
-                    for (i in $scope.sizeData) {
-                        for (s in $scope.sizes) {
-                            if ($scope.sizes[s] === $scope.sizeData[i].Size) {
-                                $scope.tireIds.push($scope.sizeData[i].idTire);
-                            }
-                        }
-                    }
-
-                    $scope.sizes = uniq($scope.sizes);
-                    $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                    $scope.tireIds = uniq($scope.tireIds);
-                }*/
-                
-                for (i in data) {
-                    if ($scope.sizes == data[i].Size) {
+            for (i in data) {
+                for (s in $scope.sizes) {
+                    if ($scope.sizes[s] === data[i].Size) {
                         $scope.tireIds.push(data[i].idTire);
                     }
                 }
-
-                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                $scope.tireIds = uniq($scope.tireIds);                
-                
             }
 
+            $scope.tireIds = uniq($scope.tireIds);
+            if ($scope.sbsValid) $scope.done = true;
 
-    //        console.log($scope.results);
-            
-/*            if ($scope.done && $scope.changed) {
-                getVehicleData();
-            }
+        }      
+         
+    }
 
-            else {
-
-                for (i in data) {
-                    if ($scope.sizes == data[i].Size) {
-                        $scope.tireIds.push(data[i].idTire);
-                    }
-                }
-
-                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                $scope.tireIds = uniq($scope.tireIds);
-                
-            }   */
-            
-            if ($scope.done && $scope.changed) {
-                getVehicleData();
-            }
-            
-            $http.get(tireJson).
-            success(function (data, status, headers, config) {
-                $scope.tireIds = uniq($scope.tireIds);
-                for (key in data) {
-                    if (data[key] && typeof key === "string") {
-                        for (t in $scope.tireIds) {
-                            if ($scope.tireIds[t] === data[key].id) {
-                                $scope.results.push(data[key]);
-                            }
-                        }
-                    }
-                }
-                $scope.done = true;
-            }).
-            error(function (data, status, headers, config) {
-                console.log("error getting resource");
-            });                
-                            
-        
-        }
-        
-console.log($scope.tireIds, $scope.sizes, $scope.results, $scope.results.length);         
-        
-        
-    };
-
-/*    $scope.resetAll = function () {
-        data = [];
-        $scope.sizeData = [];
-        $scope.vehicleData = [];
-        make = year = model = style = 0;
-        getVehicleData();
-    };*/
-
-    $scope.resetSBV = function (index) {
-        $scope.yearSelect = $scope.makeSelect = $scope.modelSelect = $scope.styleSelect = 0
+    $scope.resetSBV = function () {
+        console.log("resetting SBV...");
+        $scope.yearSelect = $scope.makeSelect = $scope.modelSelect = $scope.styleSelect = 0;
+        getVehicleData()
     };
 
     $scope.resetSBS = function () {
-        $scope.widthSelect = $scope.ratioSelect = $scope.rimSelect = 0
+        console.log("resetting SBS...");
+        $scope.widthSelect = 0;
+        getTireSize()
     };
 
-/*    $scope.displayResults = function () {
-
-        if ($scope.sizes.length > 1) {
-            $scope.matchTireSize();
-        } else {
-
-            $http.get(tireJson).
-            success(function (data, status, headers, config) {
-                for (key in data) {
-                    if (data[key] && typeof key === "string") {
-                        for (t in $scope.tireIds) {
-                            if ($scope.tireIds[t] === data[key].id) {
-                                $scope.results.push(data[key]);
-                            }
+    $scope.displayResults = function() {
+                
+        $scope.results = [];
+        $scope.urls = [];
+        
+        $http.get(tireJson).
+        success(function (data, status, headers, config) {
+            for (key in data) {
+                if (data[key] && typeof key === "string") {
+                    for (t in $scope.tireIds) {
+                        if ($scope.tireIds[t] === data[key].id) {
+                            $scope.results.push(data[key]);
                         }
                     }
                 }
-            }).
-            error(function (data, status, headers, config) {
-                console.log("error getting resource");
-            });
-
-     //       console.log($scope.results);
-
-            $scope.resetAll;
-        }
-
-    };*/
+            }   
+        }).
+        error(function (data, status, headers, config) {
+            console.log("error getting resource");
+        }); 
+        
+        $http.get(tireUrlsJson).
+        success(function (data, status, headers, config) {
+            data.sort( function (a,b) {return a.id - b.id} );
+            for (key in data) {
+                if (data[key] && typeof key === "string") {
+                    for (r in $scope.results) {
+                        if ($scope.results[r].id == data[key].id) {
+                            $scope.urls.push(data[key]);
+                        }
+                    }
+                }
+            }   
+        }).
+        error(function (data, status, headers, config) {
+            console.log("error getting resource");
+        }); 
+        
+        console.log('Results...', $scope.results);
+        console.log('URLS...', $scope.urls);
+        
+    }
 
     getVehicleData();
-
-
-    /*
-    
-{"id":"1","Year":"1997","Make":"Acura","Model":"CL","Style":"Base","Sequence":"1","Position":"Both","Size":"205\/55R16","LoadIndex":"89","SpeedRating":"V","SizeDesc":"205\/55R16 89V","Width":"205","Ratio":"55","Diameter":"16"}, {"id":"2","Year":"2001","Make":"Acura","Model":"CL","Style":"Premium","Sequence":"1","Position":"Both","Size":"205\/60R16","LoadIndex":"91","SpeedRating":"V","SizeDesc":"P205\/60R16 91V","Width":"205","Ratio":"60","Diameter":"16"},
-
-
-{"id":"117","Year":"1991","Make":"Acura","Model":"NSX","Style":"Base","Sequence":"1","Position":"Front","Size":"205\/50R15","LoadIndex":"","SpeedRating":"","SizeDesc":"205\/50ZR15","Width":"205","Ratio":"50","Diameter":"15"}, {"id":"118","Year":"1991","Make":"Acura","Model":"NSX","Style":"Base","Sequence":"1","Position":"Rear","Size":"225\/50R16","LoadIndex":"","SpeedRating":"","SizeDesc":"225\/50ZR16","Width":"225","Ratio":"50","Diameter":"16"},
-
-    */
-
+    getTireSize();
 
 });
