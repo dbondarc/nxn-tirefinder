@@ -6,8 +6,7 @@ var tireJson = "data/tire.json",
     tireMediaJson = "data/tiremedia.json";
 
 var make, year, model, style, tirewidth, tireratio, rimsize;
-var sbvData = [];
-var sbsData = [];
+var subsetData = [];
 var app = angular.module("NexenTireFinder", []);
 
 function uniq(a) {
@@ -20,9 +19,20 @@ app.controller("DataCtrl", function ($scope, $http) {
 
     $scope.active = false;
 
-    
-    // only need this for Search By Vehicle to get the Tire Size
-    
+
+
+    /*    function getData() {
+            $http.get(tireJson).
+            success( function( data, status, headers, config ) {
+                console.log(data);
+            }).
+            error( function(data, status, headers, config ) {
+                console.log("error getting resource");
+            });
+
+        }        
+        */
+
     function getVehicleData() {
         $http.get(vehicleJson).
         success(function (data, status, headers, config) {
@@ -92,7 +102,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                 "value": ""
             };
 
-            getTireSize();
+            getTireData();
 
         }).
         error(function (data, status, headers, config) {
@@ -101,12 +111,8 @@ app.controller("DataCtrl", function ($scope, $http) {
 
     }
 
-    // only used for filter by tire size
-    
-    function getTireSize() {
+    function getTireData() {
 
-                        $scope.sizes = [];
-        
         $http.get(tireSizeJson).
         success(function (data, status, headers, config) {
             for (key in data) {
@@ -153,13 +159,17 @@ app.controller("DataCtrl", function ($scope, $http) {
         var models = [];
         var makes = [];
         var styles = [];
-        sbvData = [];
-        sbsData = [];
+        subsetData = [];
+        $scope.results = [];
         $scope.noMatches = false;
         $scope.done = false;
         $scope.changed = true;
 
-        if ($scope.active === "SBV") { // Search By Vehicle only          
+        if ($scope.active === "SBV") { // Search By Vehicle only
+
+            $scope.ratios = [];
+            $scope.rims = [];
+            $scope.sizes = [];            
             
             data = $scope.vehicleData;
             make = $scope.selectedMake;
@@ -187,7 +197,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                                 if (style && style == data[i].Style) {
 
                                     $scope.sizes.push(data[i].Size);
-                                    sbvData.push(data[i]);
+                                    subsetData.push(data[i]);
 
                                 }
                             }
@@ -201,13 +211,17 @@ app.controller("DataCtrl", function ($scope, $http) {
 
 
 
-                console.log("SBV DataObj: "+sbvData, sbvData.length);
+                console.log("SubsetDataObj: "+subsetData, subsetData.length);
 
             }
 
         }
 
         if ($scope.active === "SBS") { // Search By Size only
+
+            $scope.ratios = [];
+            $scope.rims = [];
+            $scope.sizes = [];            
             
             data = $scope.sizeData;  // using tireSize table
             tirewidth = $scope.selectedWidth;
@@ -215,11 +229,7 @@ app.controller("DataCtrl", function ($scope, $http) {
             rimsize = $scope.selectedRim;
 
             if ($scope.widths.length > 0) {
-                
-                $scope.ratios = [];
-                $scope.rims = [];
-                $scope.sizes = [];                    
-                
+
                 for (n in data) {
                     if (tirewidth && tirewidth == data[n].tireWidth) {
                         $scope.ratios.push(data[n].tireRatio);
@@ -240,71 +250,97 @@ app.controller("DataCtrl", function ($scope, $http) {
     };
 
     $scope.matchTireSize = function (v) {
-        
-        // This should only be used to filter for more than one size. Only one size result in SBV or SBS should be bypassed.
 
+        $scope.results = [];
         $scope.selected = v;
-        $scope.tireIds = $scope.results = [];
-        data = $scope.sizeData; // only valid for SBS
+    
+        data = $scope.sizeData;
         
-//        console.log(data, $scope.selected);
+        console.log(data, $scope.selected);
         
         if (!$scope.changed && $scope.done) {
             console.log("No changes detected. Do NOTHING!!!!");
             return false
         }
         
-        else {          
+        else {
+
+            if ($scope.done && $scope.changed) {
+                getVehicleData();
+            }
+
+            else {
+
+                for (i in data) {
+                    if ($scope.sizes == data[i].Size) {
+                        $scope.tireIds.push(data[i].idTire);
+                    }
+                }
+
+                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
+                $scope.tireIds = uniq($scope.tireIds);
+            }             
             
             if ($scope.sbvValid && !$scope.sbsValid) {
 
+                $scope.sizes = [];
 
-
-                if (sbvData.length === 1) {
+                if (subsetData.length === 1) {
                     console.log("Only one size available for this vehicle");
 
                     // check if tire size has same front and back
-                    if (sbvData[0].Position === "Both") {
+                    if (subsetData[0].Position === "Both") {
                         console.log("FRONT & BACK ARE THE SAME!");
-                     //   $scope.sizes = sbvData[0].Size;
-                        $scope.sizes.push(sbvData[0].Width + "/" + sbvData[0].Ratio + "R" + sbvData[0].Diameter);
-                     //   $scope.tireIds.push(sbvData[0].idTire);
-                        $scope.selectedFront = $scope.selectedRear = sbvData[0].Size;
+                     //   $scope.sizes = subsetData[0].Size;
+                        $scope.sizes.push(subsetData[0].Width + "/" + subsetData[0].Ratio + "R" + subsetData[0].Diameter);
+                     //   $scope.tireIds.push(subsetData[0].idTire);
+                        $scope.selectedFront = $scope.selectedRear = subsetData[0].Size;
                     }
                 //    console.log($scope.sizeData);
                 //     console.log($scope.sizes);
                    // $scope.tireIds = uniq($scope.tireIds);
                     
                                     
-               //    console.log(sbvData, $scope.tireIds);
+               //    console.log(subsetData, $scope.tireIds);
                     
                     
                     
-                } else if (sbvData.length > 1) {
+                } else if (subsetData.length > 1) {
 
                     
                     // reduce the subsetData to a single element
 
-                    for (k in sbvData) {
-                        $scope.sizes.push(sbvData[k].Size);
-                        if (sbvData[k].Size === $scope.selected) {
+                    for (k in subsetData) {
+                        $scope.sizes.push(subsetData[k].Size);
+                        if (subsetData[k].Size === $scope.selected) {
                             console.log("!!!!!!!!!!!!!!");
-                            $scope.sizeData = sbvData[k];
+                            $scope.sizeData = subsetData[k];
                             
                             // apply selection to tireSize
-                            if ( sbvData[k].Position == "Front" ) {
-                                $scope.selectedFront = sbvData[k].Size
+                            if ( subsetData[k].Position == "Front" ) {
+                                $scope.selectedFront = subsetData[k].Size
                             }
-                            if ( sbvData[k].Position == "Rear" ) {
-                                $scope.selectedRear = sbvData[k].Size
+                            if ( subsetData[k].Position == "Rear" ) {
+                                $scope.selectedRear = subsetData[k].Size
                             }                           
                             else 
-                                $scope.selectedFront = $scope.selectedRear = sbvData[k].Size;
+                                $scope.selectedFront = $scope.selectedRear = subsetData[k].Size;
                         }
                     }
                     
                     
- //                   console.log($scope.sizeData,"Selected Size: "+$scope.selected, "Multiple sizes available for this vehicle");                    
+                    console.log($scope.sizeData,"Selected Size: "+$scope.selected, "Multiple sizes available for this vehicle");                    
+
+
+                    
+/*                    for (n in subsetData) {
+                        if ( subsetData[n].Position === "Front" ) {
+                            $scope.selectedFront = subsetData[n].Size
+                        }
+                        if ( subsetData[n].Position === "Rear" ) {
+                            $scope.selectedRear = subsetData[n].Size
+                        }
+                    }*/
 
                     
                     
@@ -327,13 +363,13 @@ app.controller("DataCtrl", function ($scope, $http) {
                     // show no matches found
                     $scope.noMatches = true;
                 }
-            
+console.log($scope.tireIds, $scope.sizes);                
 
             }
 
             if (!$scope.sbvValid && $scope.sbsValid) {
                 
-/*                if ($scope.done) {
+                if ($scope.done) {
                     getVehicleData();
                 }
                 
@@ -350,46 +386,12 @@ app.controller("DataCtrl", function ($scope, $http) {
                     $scope.sizes = uniq($scope.sizes);
                     $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
                     $scope.tireIds = uniq($scope.tireIds);
-                }*/
-                
-                for (i in data) {
-                    if ($scope.sizes == data[i].Size) {
-                        $scope.tireIds.push(data[i].idTire);
-                    }
                 }
-
-                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                $scope.tireIds = uniq($scope.tireIds);                
                 
             }
 
-
-    //        console.log($scope.results);
-            
-/*            if ($scope.done && $scope.changed) {
-                getVehicleData();
-            }
-
-            else {
-
-                for (i in data) {
-                    if ($scope.sizes == data[i].Size) {
-                        $scope.tireIds.push(data[i].idTire);
-                    }
-                }
-
-                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                $scope.tireIds = uniq($scope.tireIds);
-                
-            }   */
-            
-            if ($scope.done && $scope.changed) {
-                getVehicleData();
-            }
-            
             $http.get(tireJson).
             success(function (data, status, headers, config) {
-                $scope.tireIds = uniq($scope.tireIds);
                 for (key in data) {
                     if (data[key] && typeof key === "string") {
                         for (t in $scope.tireIds) {
@@ -399,18 +401,16 @@ app.controller("DataCtrl", function ($scope, $http) {
                         }
                     }
                 }
-                $scope.done = true;
             }).
             error(function (data, status, headers, config) {
                 console.log("error getting resource");
-            });                
-                            
-        
+            });
+
+    //        console.log($scope.results);
+            
+            $scope.done = true;
+            
         }
-        
-console.log($scope.tireIds, $scope.sizes, $scope.results, $scope.results.length);         
-        
-        
     };
 
 /*    $scope.resetAll = function () {

@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'HelveticaCond';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-Cond.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaBold';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaCondObl';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-CondObl.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HelveticaBoldCondObl';
+  src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-BoldCondObl.otf') format('opentype');
+}
+
 html, body {
     height: 100%;
 }
@@ -7,18 +27,36 @@ body {
     min-width: 320px;
     width: 100%;
     text-align: center;
-    font-family: "Open Sans";
+    font-family: "HelveticaCond";
     font-size: 12px;    
 }
 
-form div {
-    padding:0;
-    margin:0;
+html body .wrapper { max-width: 64em; margin-left: auto; margin-right: auto; background-color: #fff; margin: 0 auto; min-width: 320px; padding: 0px; }
+
+html body .wrapper::after { clear: both; content: ""; display: block; }
+
+
+header {
+    text-align: left;
+    padding: 20px;
+}
+
+h2 {
+    font-family: "HelveticaBoldCondObl";
+    font-size: 48.24pt;
+    letter-spacing: 50;
+    text-transform: uppercase;
+    color: #80298f;
+    white-space: nowrap;
+}
+
+h2 span {
+    margin-left: 20px;
+    font-size: 48px;
 }
 
 form h3, form h4 {
     text-transform: uppercase;
-    font-style: italic;
     font-weight: bold;
     color: darkmagenta;
 }
@@ -52,7 +90,7 @@ form div.row {
 
 form .btn {
     color: #fff;
-    background: #ff6200;
+    background: #80298f;
     text-transform: uppercase;
 }
 
@@ -66,11 +104,7 @@ form .btn:hover {
 } 
 
 select {
-    float: none !important;
     text-transform: uppercase;
-    font-style: italic;
-    font-weight: bold;
-    min-width: 200px;    
 }
 
 form label {
@@ -78,17 +112,25 @@ form label {
 }
 
 button.search {
-    background-color: darkmagenta;
+    background-color: #80298f;
     color: white;
-    margin-left: 5px;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+
+.title {
+    font-family: "HelveticaBoldCondObl";
+    font-size: 31.25pt;
+    letter-spacing: 0;
+    color: #80298f;
 }
 
 .btn {
-    background-color: darkmagenta;
+    background-color: #80298f;
     color: #fff;
     padding: 6px 10px;  /* Bootstrap override */
     border-radius: 0;
-    font-style: italic;
     text-transform: uppercase;
 }
 
@@ -96,76 +138,45 @@ button.search {
     color:#fff; 
 }
 
-.form-group {
-    margin: 0;
-}
-
-.form-control {
-    border-radius: 0px;  /* Bootstrap override */
-    margin: 3px;
-}
-
 #results {
     float: left;
     text-align: left;
 }
 
-
-
-label:after {
-  content: '>';
-  font: 17px "Consolas", monospace;
-  color: #333;
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-  right: 11px;
-  /*Adjust for position however you want*/
-  
-  top: 9px;
-  padding: 0 0 2px;
-  /*border-bottom: 1px solid #999;*/
-  /*left line */
-  
-  position: absolute;
-  pointer-events: none;
-}
- 
-label select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  /* Add some styling */
-  
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  height: 50px;
-  float: right;
-  margin: 5px 0px;
-  padding: 0px 24px;
-  font-size: 16px;
-  line-height: 1.75;
-  color: #333;
-  background-color: #ffffff;
-  background-image: none;
-  border: 1px solid #cccccc;
-  -ms-word-break: normal;
-  word-break: normal;
-}
- 
-
-.form-inline .form-control {
-    display: block; /* FIX BOOTSTRAP display: inline-block; */
+#results h6 {
+    position: absolute;
 }
 
-.form-group {
-    height: 50px;
-    line-height: 50px;
+
+select {
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    margin: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: HelveticaCondObl; 
+    margin: 5px 0px;
+    padding: 0px 15px;
+    line-height: 1.75;
+    background-color: #ffffff;
+    background-image: none;
+    color: #555;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    float:left;
+    width: 100%;     
 }
 
-#results .form-group h4, #results .form-group button {
+span.glyphicon-menu-down {
+    position: relative;
+    right: 8px;
+    top: 14px;
+}
+
+#results h4, #results button {
     margin-left: 5px;
     min-width: 200px;
 }
@@ -192,4 +203,48 @@ label select {
 
 #results .desc {
     padding-bottom: 40px;
+}
+
+
+.list div {
+    float: left;
+}
+
+.btn-wrapper {
+    position: relative;
+    height: 100%;
+    top: 20px;
+}
+
+.sep {
+    margin-top: 20px;
+    text-align: center;    
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.tile {
+    display: inline-block;
+}
+
+.tile h4 {
+    position: absolute;
+}
+
+.close {
+    position: absolute;
+    right: 0px;
+    font: 32px "Consolas", monospace;  
+    color: #80298f;  
+}
+
+.btn-choose {
+    padding: 6px 40px;
+}
+
+@media only screen and (min-width:767px) {
+    .sep {
+        margin-top: 0px;
+        text-align: left;
+    }
 }

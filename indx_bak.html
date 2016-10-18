@@ -20,9 +20,20 @@ app.controller("DataCtrl", function ($scope, $http) {
 
     $scope.active = false;
 
-    
-    // only need this for Search By Vehicle to get the Tire Size
-    
+
+
+    /*    function getData() {
+            $http.get(tireJson).
+            success( function( data, status, headers, config ) {
+                console.log(data);
+            }).
+            error( function(data, status, headers, config ) {
+                console.log("error getting resource");
+            });
+
+        }        
+        */
+
     function getVehicleData() {
         $http.get(vehicleJson).
         success(function (data, status, headers, config) {
@@ -92,7 +103,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                 "value": ""
             };
 
-            getTireSize();
+            getTireData();
 
         }).
         error(function (data, status, headers, config) {
@@ -101,12 +112,8 @@ app.controller("DataCtrl", function ($scope, $http) {
 
     }
 
-    // only used for filter by tire size
-    
-    function getTireSize() {
+    function getTireData() {
 
-                        $scope.sizes = [];
-        
         $http.get(tireSizeJson).
         success(function (data, status, headers, config) {
             for (key in data) {
@@ -240,12 +247,10 @@ app.controller("DataCtrl", function ($scope, $http) {
     };
 
     $scope.matchTireSize = function (v) {
-        
-        // This should only be used to filter for more than one size. Only one size result in SBV or SBS should be bypassed.
 
         $scope.selected = v;
         $scope.tireIds = $scope.results = [];
-        data = $scope.sizeData; // only valid for SBS
+        data = $scope.sizeData;
         
 //        console.log(data, $scope.selected);
         
@@ -258,7 +263,7 @@ app.controller("DataCtrl", function ($scope, $http) {
             
             if ($scope.sbvValid && !$scope.sbsValid) {
 
-
+                $scope.sizes = [];
 
                 if (sbvData.length === 1) {
                     console.log("Only one size available for this vehicle");
@@ -333,7 +338,7 @@ app.controller("DataCtrl", function ($scope, $http) {
 
             if (!$scope.sbvValid && $scope.sbsValid) {
                 
-/*                if ($scope.done) {
+                if ($scope.done) {
                     getVehicleData();
                 }
                 
@@ -350,23 +355,14 @@ app.controller("DataCtrl", function ($scope, $http) {
                     $scope.sizes = uniq($scope.sizes);
                     $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
                     $scope.tireIds = uniq($scope.tireIds);
-                }*/
-                
-                for (i in data) {
-                    if ($scope.sizes == data[i].Size) {
-                        $scope.tireIds.push(data[i].idTire);
-                    }
                 }
-
-                $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
-                $scope.tireIds = uniq($scope.tireIds);                
                 
             }
 
 
     //        console.log($scope.results);
             
-/*            if ($scope.done && $scope.changed) {
+            if ($scope.done && $scope.changed) {
                 getVehicleData();
             }
 
@@ -381,11 +377,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                 $scope.selectedFront = $scope.selectedRear = $scope.sizes[0];
                 $scope.tireIds = uniq($scope.tireIds);
                 
-            }   */
-            
-            if ($scope.done && $scope.changed) {
-                getVehicleData();
-            }
+            }   
             
             $http.get(tireJson).
             success(function (data, status, headers, config) {
@@ -399,6 +391,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                         }
                     }
                 }
+                $scope.results = uniq($scope.results);
                 $scope.done = true;
             }).
             error(function (data, status, headers, config) {
