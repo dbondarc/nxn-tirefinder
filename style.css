@@ -201,6 +201,17 @@ span.glyphicon-menu-down {
     line-height: 40px;    
 }
 
+#results a span {
+    position: absolute;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    font-size: 18px;
+    padding: 15px;
+    max-width: 250px;
+}
+
 #results .desc {
     padding-bottom: 40px;
 }
@@ -240,6 +251,32 @@ span.glyphicon-menu-down {
 
 .btn-choose {
     padding: 6px 40px;
+}
+
+.bs-glyphicons .glyphicon {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-menu-down:before {
+    content: "\e259";
+}
+
+.glyphicon-search:before {
+    content: "\e003";
 }
 
 @media only screen and (min-width:767px) {
