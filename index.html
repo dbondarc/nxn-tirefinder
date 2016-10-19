@@ -27,7 +27,7 @@
         <header>
             <h2 class="col-xs-12">Tire Finder<span class="glyphicon glyphicon-search" aria-hidden="true"></span></h2>
         </header>
-        <div class="menu clearfix col-xs-12" ng-show="!done && sizes.length == 0">
+        <div class="menu clearfix col-xs-12" ng-show="!done && sizes.length<=1">
             <div id="menuGroupDrop3" class="dropdown-toggle btn-group col-lg-12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <ul class="dd-menu col-xs-12" aria-labelledby="menuGroupDrop3">
                     <li class="col-xs-12">
@@ -154,8 +154,8 @@
                 </div>
                 <div class="col-xs-12">
                     <div class="col-sm-5 col-xs-12 tile" ng-repeat="(i,v) in results track by v.id">
-                        <h4 class="col-sm-10 col-xs-12"> {{ v.Name }} | {{ v.ShortDescription }} </h4>
                         <a href="{{urls[i].URL}}" target="_blank" alt={{urls[i].Name}}>
+                            <span class="col-sm-10 col-xs-12"> {{ v.Name }} | {{ v.ShortDescription }} </span>
                         <img ng-src="http://www.nexentireusa.com/cms_uploads/{{ v.TeaserImage }}" /></a>
                     </div>
                 </div>                    
@@ -173,8 +173,8 @@
             <div class="col-lg-12">
                 <ul ng-if="sbsValid && active == 'SBS'">
                     <li class="col-xs-6 tile" ng-repeat="(i,v) in results track by v.id" style="height: auto;">
-                        <h4 class="col-lg-10"> {{ v.Name }} | {{ v.ShortDescription }} </h4>
                         <a href="{{urls[i].URL}}" target="_blank" alt={{urls[i].Name}}>
+                            <span class="col-lg-10"> {{ v.Name }} | {{ v.ShortDescription }} </span>                            
                         <img ng-src="http://www.nexentireusa.com/cms_uploads/{{ v.TeaserImage }}" />
                         </a>
                     </li>
