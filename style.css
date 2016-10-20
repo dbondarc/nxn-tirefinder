@@ -188,6 +188,7 @@ span.glyphicon-menu-down {
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
+    margin: 10px 0; 
 }
 
 #results h3 {
@@ -251,6 +252,10 @@ span.glyphicon-menu-down {
 
 .btn-choose {
     padding: 6px 40px;
+}
+
+.results {
+    margin-top: 20px;
 }
 
 .bs-glyphicons .glyphicon {
