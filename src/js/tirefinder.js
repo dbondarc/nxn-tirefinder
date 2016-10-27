@@ -164,12 +164,12 @@ app.controller("DataCtrl", function ($scope, $http) {
         if (selected) $scope.selected = selected;
 
         if (!$scope.changed && $scope.done) {
-            console.log("No changes detected. Do NOTHING!!!!");
+            //console.log("No changes detected. Do NOTHING!!!!");
             return false
         }
         
         if ($scope.done && $scope.changed) {
-            console.log("Done and changed");
+            //console.log("Done and changed");
             $scope.results = [];
             $scope.tireIds = [];
         }
@@ -226,28 +226,28 @@ app.controller("DataCtrl", function ($scope, $http) {
                 }                
                 
                 if ($scope.sizes.length == 1 || $scope.selected) { 
-                    console.log("One size for this vehicle");
+                //    console.log("One size for this vehicle");
 
                     data = sbvData;
                     for (d in data) {
 
                         if (!$scope.selected) {
                             if ($scope.sizes[0] === data[d].Size) {
-                                size = data[d].Width + "/" + data[d].Ratio + "R" + data[d].Diameter;
+                                size = data[d].Size;
                             }
                         }
 
 
                         if ( data[d].Position == "Front" ) {
-                            console.log("FRONT & BACK ARE DIFFERENT!");
+                        //    console.log("FRONT & BACK ARE DIFFERENT!");
                             $scope.selectedFront = data[d].Size
                         }                         
                         else if ( data[d].Position == "Rear" ) {
-                            console.log("FRONT & BACK ARE DIFFERENT!");
+                        //    console.log("FRONT & BACK ARE DIFFERENT!");
                             $scope.selectedRear = data[d].Size
                         }                           
                         else {
-                            console.log("FRONT & BACK ARE THE SAME!");
+                        //    console.log("FRONT & BACK ARE THE SAME!");
                             $scope.selectedFront = $scope.selectedRear = size;
                         }
                         
@@ -265,15 +265,11 @@ app.controller("DataCtrl", function ($scope, $http) {
                     $scope.tireIds = uniq($scope.tireIds);
                     if ($scope.sbvValid) $scope.done = true;
                     
-                    console.log("tireIds: "+$scope.tireIds, "sizes: "+$scope.sizes, 
-                                "sizesLength:"+$scope.sizes.length);
-                    console.log("done? "+$scope.done, "sbvValid? "+$scope.sbvValid, "changed?"
-                                +$scope.changed);
-                    
-                    
+                    //console.log("tireIds: "+$scope.tireIds, "sizes: "+$scope.sizes, "sizesLength:"+$scope.sizes.length);
+                    //console.log("done? "+$scope.done, "sbvValid? "+$scope.sbvValid, "changed?"+$scope.changed);
                 }
                 else if ($scope.sizes.length > 1) {
-                    console.log("Multiple sizes for this vehicle");
+                    //console.log("Multiple sizes for this vehicle");
                     $scope.selected = 0;
                     $scope.sequence = 0;
 
@@ -291,7 +287,7 @@ app.controller("DataCtrl", function ($scope, $http) {
                     
                 }
                 else {
-                    console.log("No sizes are available for this vehicle");
+                    //console.log("No sizes are available for this vehicle");
                     // show no matches found
                     $scope.noMatches = true;
                 }
@@ -342,13 +338,13 @@ app.controller("DataCtrl", function ($scope, $http) {
     }
 
     $scope.resetSBV = function () {
-        console.log("resetting SBV...");
+        //console.log("resetting SBV...");
         $scope.yearSelect = $scope.makeSelect = $scope.modelSelect = $scope.styleSelect = 0;
         getVehicleData()
     };
 
     $scope.resetSBS = function () {
-        console.log("resetting SBS...");
+        //console.log("resetting SBS...");
         $scope.widthSelect = 0;
         getTireSize()
     };
@@ -391,8 +387,8 @@ app.controller("DataCtrl", function ($scope, $http) {
             console.log("error getting resource");
         }); 
         
-        console.log('Results...', $scope.results);
-        console.log('URLS...', $scope.urls);
+        //console.log('Results...', $scope.results);
+        //console.log('URLS...', $scope.urls);
         
     }
 
