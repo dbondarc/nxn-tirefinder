@@ -18,12 +18,20 @@
   src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-BoldCondObl.otf') format('opentype');
 }
 
+@font-face {
+    font-family:'Glyphicons Halflings';
+    src:url(fonts/glyphicons-halflings-regular.eot);
+    src:url(fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(fonts/glyphicons-halflings-regular.woff2) format('woff2'),url(fonts/glyphicons-halflings-regular.woff) format('woff'),url(fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
+}
+
 html, body {
     height: 100%;
 }
 
 body { 
-    background: #ffffff;
+    background-image: url('img/tirefinder_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     min-width: 320px;
     width: 100%;
     text-align: center;
@@ -31,10 +39,20 @@ body {
     font-size: 12px;    
 }
 
-html body .wrapper { max-width: 64em; margin-left: auto; margin-right: auto; background-color: #fff; margin: 0 auto; min-width: 320px; padding: 0px; }
+html body .wrapper { 
+    max-width: 64em; 
+    margin: 0 auto; 
+    background: transparent; 
+    margin: 0 auto; 
+    min-width: 320px; 
+    padding: 0px; 
+}
 
-html body .wrapper::after { clear: both; content: ""; display: block; }
-
+html body .wrapper::after { 
+    clear: both; 
+    content: ""; 
+    display: block; 
+}
 
 header {
     text-align: left;
@@ -43,7 +61,7 @@ header {
 
 h2 {
     font-family: "HelveticaBoldCondObl";
-    font-size: 48.24pt;
+    font-size: 32px;
     letter-spacing: 50;
     text-transform: uppercase;
     color: #80298f;
@@ -52,13 +70,13 @@ h2 {
 
 h2 span {
     margin-left: 20px;
-    font-size: 48px;
+    font-size: 32px;
 }
 
 form h3, form h4 {
     text-transform: uppercase;
     font-weight: bold;
-    color: darkmagenta;
+    color: #80298f;
 }
 
 hr {
@@ -103,10 +121,6 @@ form .btn:hover {
     font-size: 12px;
 } 
 
-select {
-    text-transform: uppercase;
-}
-
 form label {
     position: relative;
 }
@@ -115,13 +129,13 @@ button.search {
     background-color: #80298f;
     color: white;
     margin-left: 10px;
-    margin-top: 4px;
+    margin-top: 5px;
 }
 
 
 .title {
     font-family: "HelveticaBoldCondObl";
-    font-size: 31.25pt;
+    font-size: 24px;
     letter-spacing: 0;
     color: #80298f;
 }
@@ -151,8 +165,8 @@ button.search {
 select {
     height: 34px;
     font-size: 14px;
+    font-weight: bold;
     line-height: 1.42857143;
-    margin: 3px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -167,6 +181,8 @@ select {
     -ms-word-break: normal;
     word-break: normal;
     float:left;
+    text-transform: uppercase;
+    min-width: 250px;    
     width: 100%;     
 }
 
@@ -188,16 +204,10 @@ span.glyphicon-menu-down {
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
-    margin: 10px 0; 
-}
-
-#results h3 {
-    color: darkmagenta;
+/*    margin: 10px 0; */
 }
     
 #results span {
-    color: #000;
-    font-size: 14px;
     height: 40px;
     line-height: 40px;    
 }
@@ -207,8 +217,6 @@ span.glyphicon-menu-down {
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
-    color: inherit;
-    font-size: 18px;
     padding: 15px;
     max-width: 250px;
 }
@@ -235,19 +243,26 @@ span.glyphicon-menu-down {
     font-weight: bold;
 }
 
-.tile {
+.thumb {
     display: inline-block;
+    padding: 0;
+    margin: 0 10px 10px 0;
 }
 
-.tile h4 {
+.sbs-result .thumb {
+    margin: 0 0 10px 0;
+}
+
+.thumb h4 {
     position: absolute;
 }
 
 .close {
     position: absolute;
-    right: 0px;
+    right: 50px;
     font: 32px "Consolas", monospace;  
-    color: #80298f;  
+    color: #80298f;
+    z-index: 99;
 }
 
 .btn-choose {
@@ -258,13 +273,13 @@ span.glyphicon-menu-down {
     margin-top: 20px;
 }
 
-.bs-glyphicons .glyphicon {
+.icons .icon {
     margin-top: 5px;
     margin-bottom: 10px;
     font-size: 24px;
 }
 
-.glyphicon {
+.icon {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -276,12 +291,98 @@ span.glyphicon-menu-down {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.glyphicon-menu-down:before {
+.icon-menu-down {
+    top: 2px;
+    right: 8px;
+}
+
+.icon-menu-down:before {
+    position: absolute;
     content: "\e259";
 }
 
-.glyphicon-search:before {
+.icon-search:before {
     content: "\e003";
+}
+
+button.search {
+    float: right;
+}
+
+.tname {
+    font-size: 18px;
+    font-weight: 600;
+    color: #80298f;
+    font-style: italic;
+    top: 0px;
+}
+
+.tdesc {
+    font-size: 14px;
+    color: #333333;
+    font-weight: normal;
+    font-style: normal;   
+    top: 22px;
+}
+
+.thumb span {
+    display: block;
+}
+
+.purple {
+    color: #80298f;
+}
+
+#results h3 {
+    padding: 0;
+    margin: 0;
+}
+
+h3 .label {
+    text-transform: none;
+    font-size: 14px;
+    color: #333333;
+    padding: 0;
+}
+
+.menu {
+    padding-top:30px;
+}
+
+h2, h4 {
+    padding: 0;
+}
+
+#results ul {
+    display: inline;
+}
+
+.sbs-result {
+    margin-left: 10px;
+}
+
+.sbs-result h3 {
+    margin: 5px 0 30px 0;
+}
+
+.sbv-result h3 {
+    margin: 10px 0;
+}
+
+#results h3.last {
+    margin: -10px 0 20px;
+}
+
+.sbs-result h3 span {
+    text-transform: none;
+    font-size: 14px;
+    color: #333333;
+    padding: 0; 
+}
+
+.sbs-result .thumbs { 
+    display: inline-block;
+    padding: 30px 0 0;
 }
 
 @media only screen and (min-width:767px) {
@@ -289,4 +390,14 @@ span.glyphicon-menu-down {
         margin-top: 0px;
         text-align: left;
     }
+
+    select {
+        min-width: auto;
+    }    
+}
+
+@media only screen and (min-width:479px) {
+    button.search {
+        float: left;
+    }       
 }
