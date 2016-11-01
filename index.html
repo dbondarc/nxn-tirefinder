@@ -89,7 +89,7 @@
                                     </select>
                                     <span class="icon icon-menu-down"></span>
                                 </div>
-                                <a href="javascript:void(0);" class="search" ng-click="done=true; changed && update(); done ? displayResults() : ''; changed = false; " id="searchByTireBtn">
+                                <a href="javascript:void(0);" class="search" ng-click="sbsValid && changed ? update() : ''; done ? displayResults() : ''; changed = false" id="searchByTireBtn">
                                 </a>
                                 <input type="hidden" ng-value="{{ sbsValid = rimsize.value.indexOf(rimSelect) >= 0 }}" />
                             </div>
@@ -126,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <a href="javascript:void(0);" class="close" ng-show="done" ng-click="done=false; resetSBV()">&nbsp;</a>
+        <a href="javascript:void(0);" class="close" ng-show="done" ng-click="done=false; resetSBV(); resetSBS()">&nbsp;</a>
         <div id="results" class="col-xs-12" ng-if="done">
             <div class="col-xs-12" ng-if="(sizes.length == 1 || selected) && sbvValid && active == 'SBV'" class="sbv-result">
                 <div class="col-lg-12">

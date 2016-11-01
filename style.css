@@ -374,7 +374,7 @@ a.search {
     height: 35px;
     width: 35px;
     margin-top: 4px;   
-    background-image: url('img/search_bk.png');
+    background-image: url('img/search_wt.png');
     background-size: cover;
     background-repeat: no-repeat;
     transition: all linear .2s;
