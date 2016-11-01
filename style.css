@@ -18,12 +18,6 @@
   src: url('fonts/Helvetica_LT_Std/HelveticaLTStd-BoldCondObl.otf') format('opentype');
 }
 
-@font-face {
-    font-family:'Glyphicons Halflings';
-    src:url(fonts/glyphicons-halflings-regular.eot);
-    src:url(fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(fonts/glyphicons-halflings-regular.woff2) format('woff2'),url(fonts/glyphicons-halflings-regular.woff) format('woff'),url(fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
-}
-
 html, body {
     height: 100%;
 }
@@ -125,14 +119,6 @@ form label {
     position: relative;
 }
 
-button.search {
-    background-color: #80298f;
-    color: white;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-
 .title {
     font-family: "HelveticaBoldCondObl";
     font-size: 24px;
@@ -161,7 +147,6 @@ button.search {
     position: absolute;
 }
 
-
 select {
     height: 34px;
     font-size: 14px;
@@ -182,14 +167,8 @@ select {
     word-break: normal;
     float:left;
     text-transform: uppercase;
-    min-width: 250px;    
+    min-width: 260px;    
     width: 100%;     
-}
-
-span.glyphicon-menu-down {
-    position: relative;
-    right: 8px;
-    top: 14px;
 }
 
 #results h4, #results button {
@@ -258,10 +237,16 @@ span.glyphicon-menu-down {
 }
 
 .close {
+    background-image: url(img/close.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: auto;
     position: absolute;
     right: 50px;
     font: 32px "Consolas", monospace;  
     color: #80298f;
+    top: 0;
     z-index: 99;
 }
 
@@ -271,42 +256,6 @@ span.glyphicon-menu-down {
 
 .results {
     margin-top: 20px;
-}
-
-.icons .icon {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    font-size: 24px;
-}
-
-.icon {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-menu-down {
-    top: 2px;
-    right: 8px;
-}
-
-.icon-menu-down:before {
-    position: absolute;
-    content: "\e259";
-}
-
-.icon-search:before {
-    content: "\e003";
-}
-
-button.search {
-    float: right;
 }
 
 .tname {
@@ -385,6 +334,60 @@ h2, h4 {
     padding: 30px 0 0;
 }
 
+button .btn-choose {
+    background-color: #80298f;
+    color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+header .icon {
+    display: inline-block;
+    height: 25px;
+    width: 30px;
+    margin-left: 15px;    
+    background-image: url('img/search_icon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+span.icon-menu-down {
+    display: inline-block;
+    position: absolute;
+    background-image: url('img/arrow.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 13px;
+    height: 7px;
+    top: 18px;  
+    right: 18px;
+}
+
+.last span.icon {
+    right: -26px;
+}
+
+a.search {
+    float: right;
+    clear: both;
+    margin-left: 0px;
+    height: 35px;
+    width: 35px;
+    margin-top: 4px;   
+    background-image: url('img/search_bk.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all linear .2s;
+}
+
+a.search:hover, a.search:active {
+    background-image: url('img/search_wt.png');
+}
+
+.form-group div {
+    max-width: 100%;
+}
+
 @media only screen and (min-width:767px) {
     .sep {
         margin-top: 0px;
@@ -392,12 +395,25 @@ h2, h4 {
     }
 
     select {
-        min-width: auto;
+        min-width: auto !important;
+    }
+    
+    .form-group div {
+        max-width: 170px;
     }    
 }
 
 @media only screen and (min-width:479px) {
-    button.search {
+    
+    a.search {
         float: left;
-    }       
+        clear: none;
+    }
+    span.icon-menu-down {
+        right: 45px;
+    }
+    .last span.icon {
+        right: 45px;
+    }    
+    
 }
